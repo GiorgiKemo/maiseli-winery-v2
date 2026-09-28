@@ -547,7 +547,8 @@
     const others = $$('.cg:not(.cg--main)');
     const main = $('.cg--main');
     const grid = $('.cellar__grid');
-    const cellar = gsap.timeline({ scrollTrigger: { trigger: '.cellar__pin', start: 'top top', end: '+=180%', pin: true, scrub: 1, invalidateOnRefresh: true } });
+    gsap.fromTo('.cg img', { opacity: 0, scale: 1.25, yPercent: 12 }, { opacity: 1, scale: 1, yPercent: 0, ease: 'power2.out', stagger: { each: .04, from: 'center' }, scrollTrigger: { trigger: '.cellar', start: 'top 95%', end: 'top 5%', scrub: 1 } });
+    const cellar = gsap.timeline({ scrollTrigger: { trigger: '.cellar__pin', start: 'top top', end: '+=240%', pin: true, scrub: 1.2, invalidateOnRefresh: true } });
     cellar.to(main, {
       scale: () => Math.max(innerWidth / main.offsetWidth, innerHeight / main.offsetHeight) * 1.02,
       borderRadius: 0, ease: 'power2.inOut', duration: 1
@@ -566,7 +567,9 @@
     gsap.from('.footer__word span', { yPercent: 100, duration: 1.4, stagger: .06, ease: 'expo.out', scrollTrigger: { trigger: '.footer__word', start: 'top 95%' } });
     gsap.from('.footer__title', { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.footer', start: 'top 80%' } });
 
-    // refresh once late images/fonts settle
+    // refresh once late images/fonts settle (debounced for lazy images)
+    let refreshT;
+    document.addEventListener('load', e => { if (e.target.tagName === 'IMG') { clearTimeout(refreshT); refreshT = setTimeout(() => ScrollTrigger.refresh(), 200); } }, true);
     addEventListener('load', () => ScrollTrigger.refresh());
     document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
