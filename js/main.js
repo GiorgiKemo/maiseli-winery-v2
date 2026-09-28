@@ -332,12 +332,13 @@
     vis.style.setProperty('--hue', w.hue);
     vis.style.setProperty('--glow', w.glow);
     if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
+    dialog.appendChild(cursor); // modal dialogs sit in the top layer, so the cursor must live inside it
     lockScroll(true);
     if (hasGsap && !reduced) gsap.fromTo($('.detail__img', dialog), { y: 80, rotation: 8, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 1.2, ease: 'expo.out', delay: .1 });
   }
   $('.detail__close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-  dialog.addEventListener('close', () => lockScroll(false));
+  dialog.addEventListener('close', () => { document.body.appendChild(cursor); lockScroll(false); });
 
   /* ------------------------------------------------------------------
      Varieties hover image
