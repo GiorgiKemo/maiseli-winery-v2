@@ -412,7 +412,7 @@
     tl.from('.hero__media img', { scale: 1.35, duration: 2.6, ease: 'expo.out' }, 0)
       .from(split.chars, { yPercent: 120, rotation: 10, opacity: 0, duration: 1.3, stagger: .022, ease: 'expo.out' }, .15)
       .from('.hero__eyebrow', { y: 20, opacity: 0, duration: 1, ease: 'power3.out' }, .3)
-      .from('.hero__script', { clipPath: 'inset(-.6em 100% -.6em -.4em)', duration: 1.6, ease: 'power2.inOut' }, .8)
+      .from('.hero__script', { clipPath: 'inset(-1em 130% -1em -1em)', duration: 1.6, ease: 'power2.inOut' }, .8)
       .from('.hero__actions > *', { y: 30, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out' }, 1)
       .from('.hero__ka', { opacity: 0, x: 80, duration: 2, ease: 'expo.out' }, .4)
       .from('.hero__meta, .hero__scroll', { opacity: 0, duration: 1 }, 1.3)
@@ -560,7 +560,7 @@
       }, 0)
       .to(main, { '--shade': 1, duration: .3 }, .7)
       .to('.cellar__copy', { opacity: 1, y: 0, duration: .35 }, .75)
-      .from('.cellar__script', { clipPath: 'inset(-.6em 100% -.6em -.4em)', duration: .4 }, .78);
+      .from('.cellar__script', { clipPath: 'inset(-1em 130% -1em -1em)', duration: .4 }, .78);
     gsap.set('.cellar__copy', { y: 40 });
 
     // footer word
