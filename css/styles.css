@@ -255,7 +255,7 @@ p { margin: 0 0 1.2em; }
 
 .stage {
   --hue: #6b1426; --glow: #b3263f;
-  position: relative; margin: 0 var(--pad); height: min(82vh, 820px); min-height: 600px;
+  position: relative; margin: 0 var(--pad); height: min(86vh, 860px); min-height: 660px; padding: 36px 0 84px;
   border-radius: 28px; overflow: hidden; color: var(--cream);
   display: grid; grid-template-columns: 90px 1fr 1fr 90px; align-items: center;
   touch-action: pan-y; user-select: none; -webkit-user-select: none;
@@ -289,7 +289,7 @@ p { margin: 0 0 1.2em; }
 .stage__facts dt { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; opacity: .6; }
 .stage__facts dd { margin: 0; font-family: var(--serif); font-size: 28px; line-height: 1; }
 .stage__desc { font-size: 16px; line-height: 1.7; opacity: .86; max-width: 440px; }
-.stage__count { position: absolute; z-index: 2; left: 50%; bottom: 26px; transform: translateX(-50%); font-size: 12px; letter-spacing: .3em; opacity: .7; }
+.stage__count { position: absolute; z-index: 2; left: 50%; bottom: 32px; transform: translateX(-50%); font-size: 12px; letter-spacing: .3em; opacity: .7; }
 .stage__idx { color: var(--gold-2); }
 
 .rail { display: flex; gap: 14px; padding: 36px var(--pad) 0; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity; }
