@@ -56,6 +56,7 @@
   ------------------------------------------------------------------ */
   const cursor = $('.cursor');
   if (finePointer && hasGsap && !reduced) {
+    root.classList.add('has-cursor');
     const label = $('.cursor__label');
     const xTo = gsap.quickTo(cursor, 'x', { duration: .35, ease: 'power3' });
     const yTo = gsap.quickTo(cursor, 'y', { duration: .35, ease: 'power3' });
@@ -410,7 +411,7 @@
     tl.from('.hero__media img', { scale: 1.35, duration: 2.6, ease: 'expo.out' }, 0)
       .from(split.chars, { yPercent: 120, rotation: 10, opacity: 0, duration: 1.3, stagger: .022, ease: 'expo.out' }, .15)
       .from('.hero__eyebrow', { y: 20, opacity: 0, duration: 1, ease: 'power3.out' }, .3)
-      .from('.hero__script', { clipPath: 'inset(0 100% 0 0)', duration: 1.6, ease: 'power2.inOut' }, .8)
+      .from('.hero__script', { clipPath: 'inset(-.6em 100% -.6em -.4em)', duration: 1.6, ease: 'power2.inOut' }, .8)
       .from('.hero__actions > *', { y: 30, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out' }, 1)
       .from('.hero__ka', { opacity: 0, x: 80, duration: 2, ease: 'expo.out' }, .4)
       .from('.hero__meta, .hero__scroll', { opacity: 0, duration: 1 }, 1.3)
@@ -467,7 +468,6 @@
     // story
     gsap.fromTo('.story__year span', { yPercent: 30, scale: .9 }, { yPercent: -10, scale: 1, ease: 'none', scrollTrigger: { trigger: '.story', start: 'top bottom', end: 'bottom top', scrub: true } });
     $$('.story__img').forEach((fig, i) => {
-      gsap.from(fig, { clipPath: 'inset(100% 0 0 0 round 999px 999px 8px 8px)', duration: 1.6, ease: 'expo.inOut', scrollTrigger: { trigger: fig, start: 'top 85%' } });
       gsap.fromTo($('img', fig), { scale: 1.3, yPercent: -8 }, { scale: 1.05, yPercent: 8, ease: 'none', scrollTrigger: { trigger: fig, start: 'top bottom', end: 'bottom top', scrub: true } });
       gsap.to(fig, { yPercent: i ? -18 : 6, ease: 'none', scrollTrigger: { trigger: '.story__grid', start: 'top bottom', end: 'bottom top', scrub: true } });
     });
@@ -558,7 +558,7 @@
       }, 0)
       .to(main, { '--shade': 1, duration: .3 }, .7)
       .to('.cellar__copy', { opacity: 1, y: 0, duration: .35 }, .75)
-      .from('.cellar__script', { clipPath: 'inset(0 100% 0 0)', duration: .4 }, .78);
+      .from('.cellar__script', { clipPath: 'inset(-.6em 100% -.6em -.4em)', duration: .4 }, .78);
     gsap.set('.cellar__copy', { y: 40 });
 
     // footer word
