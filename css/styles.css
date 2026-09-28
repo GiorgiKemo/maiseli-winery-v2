@@ -93,8 +93,8 @@ em { font-style: italic; }
 }
 p { margin: 0 0 1.2em; }
 
-/* line mask for split lines */
-.split-line { overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+/* SplitText masks clip at the line box — give descenders (g, y, q) and italic overhangs room */
+.sl-mask, .sw-mask { padding: .08em .12em .24em 0; margin: -.08em -.12em -.24em 0; }
 
 /* ---------- Buttons ---------- */
 .btn {

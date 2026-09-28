@@ -173,7 +173,7 @@
     </svg>`;
   }
   const bottleMarkup = (w, cls = '') => w.img
-    ? `<img src="${w.img}" alt="${w.name} ${w.vintage || ''} bottle" class="${cls}" draggable="false">`
+    ? `<img src="${w.img}" alt="${w.placeholder ? `${w.sub} — bottle photograph coming soon` : `${w.name} ${w.vintage || ''} bottle`}" class="${cls}" draggable="false">`
     : bottleSVG(w);
 
   const stage = $('.stage');
@@ -324,7 +324,7 @@
     $('.detail__name', dialog).textContent = w.name;
     $('.detail__sub', dialog).textContent = w.sub;
     $('.detail__img', dialog).innerHTML = bottleMarkup(w);
-    const facts = [['Vintage', w.vintage || 'To be confirmed'], ['Alcohol', w.abv || 'To be confirmed'], ['Grape', w.grape], ['Production', w.img ? 'Hand-crafted limited run of 1,500 bottles' : 'To be confirmed']];
+    const facts = [['Vintage', w.vintage || 'To be confirmed'], ['Alcohol', w.abv || 'To be confirmed'], ['Grape', w.grape], ['Production', w.placeholder ? 'To be confirmed' : 'Hand-crafted limited run of 1,500 bottles']];
     $('.detail__facts', dialog).innerHTML = facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
     $('.detail__desc', dialog).textContent = w.desc;
     $('.detail__coll', dialog).textContent = col.text || '';
@@ -407,7 +407,7 @@
 
   function buildHeroIntro() {
     if (!hasGsap || reduced) return null;
-    const split = SplitText.create('.hero__title', { type: 'lines,words,chars', mask: 'lines' });
+    const split = SplitText.create('.hero__title', { type: 'lines,words,chars', mask: 'lines', linesClass: 'sl' });
     const tl = gsap.timeline({ paused: true });
     tl.from('.hero__media img', { scale: 1.35, duration: 2.6, ease: 'expo.out' }, 0)
       .from(split.chars, { yPercent: 120, rotation: 10, opacity: 0, duration: 1.3, stagger: .022, ease: 'expo.out' }, .15)
@@ -453,7 +453,7 @@
     $$('.reveal').forEach(el => gsap.to(el, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } }));
     $$('.reveal-lines').forEach(el => {
       SplitText.create(el, {
-        type: 'lines', mask: 'lines', autoSplit: true,
+        type: 'lines', mask: 'lines', linesClass: 'sl', autoSplit: true,
         onSplit: self => gsap.from(self.lines, { yPercent: 110, duration: 1.3, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 85%' } })
       });
     });
@@ -477,7 +477,7 @@
 
     mm.add('(min-width: 961px)', () => {
       // May — title plays on entry, then the two moments slide in while pinned
-      const maySplit = SplitText.create('.may__title', { type: 'words,chars', mask: 'words' });
+      const maySplit = SplitText.create('.may__title', { type: 'words,chars', mask: 'words', wordsClass: 'sw' });
       gsap.timeline({ scrollTrigger: { trigger: '.may', start: 'top 65%' } })
         .from('.may__word', { scale: 1.5, opacity: 0, duration: 2, ease: 'expo.out' }, 0)
         .from(maySplit.chars, { yPercent: 110, duration: 1.2, stagger: .025, ease: 'expo.out' }, .1)

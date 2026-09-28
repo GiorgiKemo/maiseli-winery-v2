@@ -28,6 +28,6 @@ The folder deploys as-is to any static host: `index.html`, `css/`, `js/`, `asset
 
 ## Before launch
 
-- **Rkatsiteli Qvevri · French Oak** has no bottle photo, vintage or ABV. It shows an illustrated placeholder marked "bottle photo coming soon". Replace `img: null` in `js/wines.js` when the photo arrives.
+- **Rkatsiteli Qvevri · French Oak**: no bottle photo, vintage or ABV was supplied. It uses a stand-in: the real Rkatsiteli bottle with the middle of its label reprinted "RKATSITELI QVEVRI · FRENCH OAK · bottle photograph coming soon". When the real photo arrives, replace `assets/img/bottle-rkatsiteli-oak.webp` and remove `placeholder: true` in `js/wines.js`.
 - **Contact details, address and social links** were not supplied. The footer has a marked spot for them.
 - Confirm the Georgian wordmark მაისელი with the winery.

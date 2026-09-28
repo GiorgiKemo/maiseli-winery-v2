@@ -1,4 +1,5 @@
 // Vintage, alcohol and bottle numbers are read from the supplied label photography.
+// placeholder: stand-in bottle (real Rkatsiteli bottle, label reprinted) until the French Oak photo is supplied.
 window.MAISELI_COLLECTIONS = {
   qvevri: {
     name: 'Traditional Qvevri',
@@ -47,7 +48,7 @@ window.MAISELI_WINES = [
   },
   {
     id: 'rkatsiteli-oak', name: 'Rkatsiteli Qvevri', sub: 'Rkatsiteli Qvevri · French Oak', collection: 'heritage',
-    vintage: null, abv: null, grape: 'Rkatsiteli', img: null,
+    vintage: null, abv: null, grape: 'Rkatsiteli', img: 'assets/img/bottle-rkatsiteli-oak.webp', placeholder: true,
     hue: '#6a4a18', glow: '#d29a45',
     desc: 'Rkatsiteli made in qvevri by the traditional method and further aged in French oak — a meeting of heritage and contemporary vision.'
   },
