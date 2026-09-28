@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Maiseli Winery — Qvevri Wine of Georgia since 1908</title>
+  <meta name="description" content="Maiseli is a Georgian family winery making wine in qvevri since 1908. Indigenous grapes, a 2-hectare hand-tended vineyard and a century-old cellar.">
+  <meta name="theme-color" content="#2a0a12">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Figtree:wght@300;400;500;600&family=Mrs+Saint+Delafield&family=Noto+Serif+Georgian:wght@300;400&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero-sunset.webp" imagesrcset="assets/img/hero-sunset-sm.webp 900w, assets/img/hero-sunset.webp 2000w" imagesizes="100vw">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="is-loading">
+
+  <!-- Arch mark reused across the page -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="arch" viewBox="0 0 60 84">
+        <path d="M5 83V31a25 25 0 0 1 50 0v52" fill="none" stroke="currentColor" stroke-width="2.2"/>
+        <path d="M13 48V31a17 17 0 0 1 34 0v17z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M14 22h32M13 28h34M13 34h34M13 40h34M18 16h24M30 16v6M22 22v6M38 22v6M30 28v6M22 34v6M38 34v6M30 40v8M20 40v8M40 40v8" fill="none" stroke="currentColor" stroke-width="1.1" opacity=".85"/>
+        <path d="M13 55h34M22 83V66a8 8 0 0 1 16 0v17" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Preloader -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__panel loader__panel--top"></div>
+    <div class="loader__panel loader__panel--bottom"></div>
+    <div class="loader__inner">
+      <svg class="loader__arch" viewBox="0 0 60 84">
+        <path d="M5 83V31a25 25 0 0 1 50 0v52" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M13 48V31a17 17 0 0 1 34 0v17z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M14 22h32M13 28h34M13 34h34M13 40h34M18 16h24M30 16v6M22 22v6M38 22v6M30 28v6M22 34v6M38 34v6M30 40v8M20 40v8M40 40v8" fill="none" stroke="currentColor" stroke-width=".8"/>
+        <path d="M13 55h34M22 83V66a8 8 0 0 1 16 0v17" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      <div class="loader__word">MAISELI</div>
+      <div class="loader__count"><span class="loader__year">1908</span></div>
+      <div class="loader__bar"><span></span></div>
+    </div>
+  </div>
+
+  <!-- Age gate -->
+  <div class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
+    <div class="gate__card">
+      <svg class="gate__arch"><use href="#arch"/></svg>
+      <p class="eyebrow">Welcome to Maiseli</p>
+      <h2 id="gate-title" class="gate__title">Are you of legal <em>drinking age</em> in your country?</h2>
+      <div class="gate__actions">
+        <button class="btn btn--solid" data-gate="yes"><span>Yes, enter</span></button>
+        <button class="btn btn--ghost" data-gate="no"><span>Not yet</span></button>
+      </div>
+      <p class="gate__note">Please enjoy responsibly.</p>
+    </div>
+  </div>
+
+  <div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <header class="nav" data-nav>
+    <a href="#top" class="nav__brand" aria-label="Maiseli — back to top">
+      <svg class="nav__arch"><use href="#arch"/></svg>
+      <span>Maiseli</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#wines" data-magnetic>Our Wines</a>
+      <a href="#story" data-magnetic>Our Story</a>
+      <a href="#vineyard" data-magnetic>Vineyard</a>
+      <a href="#winemaking" data-magnetic>Winemaking</a>
+      <a href="#homeland" data-magnetic>Homeland of Wine</a>
+      <a href="#cellar" data-magnetic>The Cellar</a>
+    </nav>
+    <a href="#wines" class="nav__cta" data-magnetic>Discover</a>
+    <button class="nav__burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </header>
+
+  <div class="menu" id="menu" aria-hidden="true">
+    <div class="menu__bg"></div>
+    <nav class="menu__links" aria-label="Mobile">
+      <a href="#wines"><i>01</i>Our Wines</a>
+      <a href="#story"><i>02</i>Our Story</a>
+      <a href="#vineyard"><i>03</i>Vineyard</a>
+      <a href="#winemaking"><i>04</i>Winemaking</a>
+      <a href="#homeland"><i>05</i>Homeland of Wine</a>
+      <a href="#cellar"><i>06</i>The Cellar</a>
+    </nav>
+    <p class="menu__foot">მაისელი — <em>one who belongs to May</em></p>
+  </div>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" data-cursor="Scroll">
+      <div class="hero__media">
+        <img src="assets/img/hero-sunset.webp" srcset="assets/img/hero-sunset-sm.webp 900w, assets/img/hero-sunset.webp 2000w" sizes="100vw" alt="Maiseli vineyard rows beneath a glowing Georgian sunset">
+      </div>
+      <canvas class="hero__dust" aria-hidden="true"></canvas>
+      <div class="hero__shade"></div>
+      <div class="hero__ka" aria-hidden="true">მაისელი</div>
+      <div class="hero__content">
+        <p class="eyebrow eyebrow--light hero__eyebrow"><span class="line"></span>Family qvevri winery · Georgia</p>
+        <h1 class="hero__title" data-split>
+          Wine from the <em>century-old</em> cellar
+        </h1>
+        <p class="hero__script">since 1908</p>
+        <div class="hero__actions">
+          <a href="#wines" class="btn btn--light" data-magnetic><span>Discover our wines</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#story" class="link-under link-under--light">Our family story</a>
+        </div>
+      </div>
+      <div class="hero__scroll" aria-hidden="true"><span>Scroll</span><i></i></div>
+      <div class="hero__meta" aria-hidden="true">
+        <span>Est. 1908 · Wine of Georgia</span>
+        <span>Qvevri · Kisi · Rkatsiteli · Tsolikouri · Saperavi</span>
+      </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Qvevri <b>✦</b> Saperavi <b>✦</b> Kisi <b>✦</b> Rkatsiteli <b>✦</b> Tsolikouri <b>✦</b> Since 1908 <b>✦</b> From the century-old cellar <b>✦</b>&nbsp;</span>
+        <span>Qvevri <b>✦</b> Saperavi <b>✦</b> Kisi <b>✦</b> Rkatsiteli <b>✦</b> Tsolikouri <b>✦</b> Since 1908 <b>✦</b> From the century-old cellar <b>✦</b>&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- ===================== WINES ===================== -->
+    <section class="wines" id="wines">
+      <div class="wines__head">
+        <p class="eyebrow reveal">The Collection</p>
+        <h2 class="h2 reveal-lines">Discover <em>our wines</em></h2>
+        <p class="wines__lede reveal">Eight wines in three directions — ancient qvevri, qvevri meeting French oak, and Georgia's naturally semi-sweet tradition.</p>
+        <div class="tabs reveal" role="tablist" aria-label="Collections">
+          <button role="tab" aria-selected="true" data-filter="all">All wines</button>
+          <button role="tab" aria-selected="false" data-filter="qvevri">Traditional Qvevri</button>
+          <button role="tab" aria-selected="false" data-filter="heritage">Our Heritage</button>
+          <button role="tab" aria-selected="false" data-filter="semisweet">Semi-Sweet</button>
+          <span class="tabs__pill" aria-hidden="true"></span>
+        </div>
+      </div>
+
+      <div class="stage" data-cursor="Drag">
+        <div class="stage__bg" aria-hidden="true"></div>
+        <div class="stage__ghost" aria-hidden="true"><span></span></div>
+        <button class="stage__arrow stage__arrow--prev" aria-label="Previous wine"><svg viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <div class="stage__bottle">
+          <div class="stage__halo" aria-hidden="true"></div>
+          <div class="stage__img"></div>
+          <div class="stage__shadow" aria-hidden="true"></div>
+        </div>
+        <button class="stage__arrow stage__arrow--next" aria-label="Next wine"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <div class="stage__info" aria-live="polite">
+          <p class="stage__collection"></p>
+          <h3 class="stage__name"></h3>
+          <p class="stage__sub"></p>
+          <dl class="stage__facts"></dl>
+          <p class="stage__desc"></p>
+          <button class="btn btn--light stage__more" data-magnetic><span>Wine details</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        </div>
+        <div class="stage__count" aria-hidden="true"><span class="stage__idx">01</span> / <span class="stage__total">08</span></div>
+      </div>
+
+      <div class="rail" role="list" aria-label="All wines"></div>
+
+      <blockquote class="pull">
+        <p class="pull__text" data-words>“Since 1908, guided by Georgian soil, <em>the qvevri,</em> the vine, and a tradition passed from one generation to the next.”</p>
+      </blockquote>
+    </section>
+
+    <!-- ===================== STORY ===================== -->
+    <section class="story" id="story">
+      <div class="story__year" aria-hidden="true"><span>1908</span></div>
+      <div class="story__grid">
+        <div class="story__intro">
+          <p class="eyebrow reveal">Our Story</p>
+          <h2 class="h2 reveal-lines">Four generations, <em>one qvevri</em></h2>
+          <p class="lead reveal">The story of Maiseli Winery began in 1908, when our great-grandfather buried the family’s first qvevri in the earth and began making wine using the ancient traditional Georgian method.</p>
+          <p class="reveal">More than a century has passed since then, yet our family’s winemaking tradition has never been interrupted. The knowledge, experience, and deep respect for wine have been passed down from generation to generation.</p>
+          <p class="reveal">Even today, we continue to make wine in the very same qvevri that was placed in the earth in 1908 — a vessel that has witnessed generations of our family and more than a century of winemaking history.</p>
+        </div>
+        <figure class="arch-img story__img story__img--a" data-parallax>
+          <img src="assets/img/cellar-qvevri-floor-sm.webp" data-src="assets/img/cellar-qvevri-floor.webp" alt="Qvevri set into the stone floor of the Maiseli cellar" loading="lazy">
+        </figure>
+        <figure class="arch-img story__img story__img--b" data-parallax="-0.15">
+          <img src="assets/img/cellar-amphora-sm.webp" alt="Clay vessel in a brick-arched niche" loading="lazy">
+        </figure>
+        <div class="story__badge" aria-hidden="true">
+          <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"/></defs><text><textPath href="#circ">THE SAME QVEVRI · SINCE 1908 · THE SAME QVEVRI · SINCE 1908 · </textPath></text></svg>
+          <svg class="story__badge-arch"><use href="#arch"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MAY ===================== -->
+    <section class="may" id="may">
+      <div class="may__pin">
+        <div class="may__word" aria-hidden="true">მაისი</div>
+        <div class="may__center">
+          <p class="eyebrow eyebrow--light">The meaning of Maiseli</p>
+          <h2 class="may__title"><span class="may__q">“</span>One who <em>belongs</em> to May<span class="may__q">”</span></h2>
+          <p class="may__text">May is when nature fully awakens, the vines come to life, and the journey toward a new harvest begins. Traditionally, it was also the month our family opened the qvevri that had remained sealed for months — when last harvest’s wine revealed its true character for the first time.</p>
+        </div>
+        <div class="may__side may__side--past">
+          <figure class="arch-img"><img src="assets/img/qvevri-lid-sm.webp" alt="The round clay lid of a sealed qvevri in the cellar floor" loading="lazy"></figure>
+          <p><span>I.</span> A chapter ends<br><em>the qvevri is opened</em></p>
+        </div>
+        <div class="may__side may__side--future">
+          <figure class="arch-img"><img src="assets/img/vines-hands-sm.webp" alt="Tending the vines in late spring" loading="lazy"></figure>
+          <p><span>II.</span> Another begins<br><em>the vines awaken</em></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== VINEYARD ===================== -->
+    <section class="vineyard" id="vineyard">
+      <div class="vineyard__hero">
+        <div class="vineyard__media" data-cursor="Explore">
+          <img src="assets/img/vineyard-aerial-sm.webp" data-src="assets/img/vineyard-aerial.webp" alt="Aerial view over the rows of the Maiseli vineyard" loading="lazy">
+          <div class="vineyard__caption">
+            <p class="eyebrow eyebrow--light">Our Vineyard</p>
+            <h2 class="h2 h2--light">Great wine begins <em>in the vineyard</em></h2>
+            <p class="vineyard__sub">With respect for the land, work by hand, and harmony with nature.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat reveal"><b data-count="2">0</b><span>hectares of our own vines</span></div>
+        <div class="stat reveal"><b data-count="4">0</b><span>indigenous Georgian varieties</span></div>
+        <div class="stat reveal"><b data-count="1908">0</b><span>the year our first qvevri was buried</span></div>
+        <div class="stat reveal"><b>By hand</b><span>tending, pruning, selecting &amp; harvesting</span></div>
+      </div>
+
+      <div class="vineyard__body">
+        <div class="vineyard__text">
+          <p class="lead reveal">Maiseli Winery owns a 2-hectare vineyard, where we grow indigenous Georgian grape varieties — Kisi, Rkatsiteli, Tsolikouri, and Saperavi.</p>
+          <p class="reveal">In caring for our vineyard, we place particular emphasis on maintaining the natural balance of the ecosystem, preserving soil health, and supporting the healthy development of the vines. We use only products permitted in organic farming, protecting the vineyard’s natural environment while producing healthy, high-quality grapes.</p>
+          <p class="reveal">Most of the work is done by hand — from tending and pruning the vines to carefully selecting and harvesting the grapes. This hands-on approach lets us give individual attention to each vine.</p>
+        </div>
+        <div class="harvest">
+          <div class="harvest__col" data-speed="-0.12">
+            <figure><img src="assets/img/harvest-1-sm.webp" alt="Harvesting Saperavi bunches into the crates" loading="lazy"></figure>
+            <figure><img src="assets/img/vines-tractor-sm.webp" alt="Working between the rows at harvest" loading="lazy"></figure>
+          </div>
+          <div class="harvest__col" data-speed="0.12">
+            <figure><img src="assets/img/harvest-3-sm.webp" alt="Lifting a heavy bunch of dark grapes" loading="lazy"></figure>
+            <figure><img src="assets/img/harvest-2-sm.webp" alt="Grapes tumbling from a bucket at harvest" loading="lazy"></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="varieties">
+        <p class="eyebrow reveal">Grown on our 2 hectares</p>
+        <ul class="varieties__list">
+          <li data-img="assets/img/harvest-2-sm.webp" data-note="Red · Qvevri, Oak &amp; Kindzmarauli"><span class="varieties__n">01</span><span class="varieties__name" data-text="Saperavi">Saperavi</span><span class="varieties__note">Red · Qvevri, Oak &amp; Kindzmarauli</span></li>
+          <li data-img="assets/img/vines-hands-sm.webp" data-note="White · Qvevri"><span class="varieties__n">02</span><span class="varieties__name" data-text="Kisi">Kisi</span><span class="varieties__note">White · Qvevri</span></li>
+          <li data-img="assets/img/vineyard-aerial-sm.webp" data-note="White · Qvevri &amp; French Oak"><span class="varieties__n">03</span><span class="varieties__name" data-text="Rkatsiteli">Rkatsiteli</span><span class="varieties__note">White · Qvevri &amp; French Oak</span></li>
+          <li data-img="assets/img/hero-sunset-sm.webp" data-note="White · Qvevri &amp; Tvishi"><span class="varieties__n">04</span><span class="varieties__name" data-text="Tsolikouri">Tsolikouri</span><span class="varieties__note">White · Qvevri &amp; Tvishi</span></li>
+        </ul>
+        <div class="varieties__float" aria-hidden="true"><img alt=""></div>
+      </div>
+    </section>
+
+    <!-- ===================== WINEMAKING ===================== -->
+    <section class="making" id="winemaking">
+      <div class="making__head">
+        <p class="eyebrow reveal">Our Winemaking</p>
+        <h2 class="h2 reveal-lines">Three directions, <em>one soul</em></h2>
+      </div>
+      <div class="cards">
+        <article class="card card--qvevri">
+          <div class="card__text">
+            <span class="card__n">I</span>
+            <p class="eyebrow eyebrow--light">The foundation</p>
+            <h3>Traditional Qvevri Wines</h3>
+            <p>We make our wines using the traditional method in qvevri buried in the earth, where the wine naturally develops and matures. Our goal is to preserve in each wine the natural character of the grape, the distinctive qualities of its origin, and the authenticity of Georgian qvevri winemaking.</p>
+            <p class="card__quote">For Maiseli, the qvevri is more than a vessel — it is part of our family history.</p>
+            <ul class="card__wines"><li>Saperavi Qvevri</li><li>Kisi Qvevri</li><li>Rkatsiteli Qvevri</li><li>Tsolikouri Qvevri</li></ul>
+          </div>
+          <figure class="card__img"><img src="assets/img/cellar-qvevri-niche-sm.webp" alt="A clay qvevri displayed above rows of bottles" loading="lazy"></figure>
+        </article>
+        <article class="card card--heritage">
+          <div class="card__text">
+            <span class="card__n">II</span>
+            <p class="eyebrow eyebrow--light">A distinctive direction</p>
+            <h3>Our Heritage — Qvevri &amp; French Oak</h3>
+            <p>Saperavi and Rkatsiteli, made in qvevri using the traditional method, are further aged in French oak barrels. The qvevri preserves the wine’s Georgian identity and authentic character, while French oak adds greater depth, structure, and complexity.</p>
+            <p class="card__quote">A meeting of heritage and contemporary vision — with Maiseli’s own signature.</p>
+            <ul class="card__wines"><li>Saperavi Qvevri · French Oak</li><li>Rkatsiteli Qvevri · French Oak</li></ul>
+          </div>
+          <figure class="card__img"><img src="assets/img/cellar-barrel-sm.webp" alt="French oak barrels resting in the brick cellar" loading="lazy"></figure>
+        </article>
+        <article class="card card--sweet">
+          <div class="card__text">
+            <span class="card__n">III</span>
+            <p class="eyebrow eyebrow--light">A Georgian tradition</p>
+            <h3>Naturally Semi-Sweet Wines</h3>
+            <p>Kindzmarauli and Tvishi — two distinctive Georgian wines in which natural sweetness, varietal aromas, and refined balance come together harmoniously. We preserve their natural character and individuality, reflecting both their origin and Georgia’s unique winemaking culture.</p>
+            <ul class="card__wines"><li>Kindzmarauli · Semi-Sweet Red</li><li>Tvishi · Semi-Sweet White</li></ul>
+          </div>
+          <figure class="card__img"><img src="assets/img/cellar-bottles-sm.webp" alt="Bottles of Maiseli wine in a lit stone niche" loading="lazy"></figure>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== HOMELAND ===================== -->
+    <section class="homeland" id="homeland">
+      <div class="homeland__pin">
+        <div class="homeland__track">
+          <div class="homeland__intro">
+            <p class="eyebrow eyebrow--light">Homeland of Wine</p>
+            <h2 class="h2 h2--light">8,000 vintages <em>of Georgia</em></h2>
+            <p>For at least 8000 years, the vine has carried symbolic and sacred meaning for the Georgian people. For Georgians, winemaking and wine drinking has always been a form of art.</p>
+            <span class="homeland__hint">Scroll through time <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+          </div>
+          <article class="era">
+            <span class="era__year">c. 6000 <small>BC</small></span>
+            <h3>The first wine</h3>
+            <p>Earthenware jars with residual wine compounds, found at two sites south of Tbilisi, revealed the earliest evidence of grape winemaking — some 8,000 years old.</p>
+          </article>
+          <article class="era era--img">
+            <figure class="arch-img"><img src="assets/img/cellar-qvevri-niche-sm.webp" alt="" loading="lazy"></figure>
+            <span class="era__year">V–VI <small>millennium BC</small></span>
+            <h3>The oldest qvevri</h3>
+            <p>Georgia’s National Museum in Tbilisi keeps a unique qvevri dated as far back as the 5th–6th millennium.</p>
+          </article>
+          <article class="era">
+            <span class="era__year">VIII–VII <small>c. BC</small></span>
+            <h3>Homer’s Odyssey</h3>
+            <p>Georgian wine is mentioned in the Odyssey — and many details of Georgian winemaking have remained unchanged since Homer’s time.</p>
+          </article>
+          <article class="era era--quote">
+            <span class="era__year">1686</span>
+            <blockquote>“There is no country where more wine is drunk and no country where better wine can be found.”</blockquote>
+            <p>— Sir John Chardin, French traveller and jeweller to the King of England and the Shah of Persia</p>
+          </article>
+          <article class="era">
+            <span class="era__year">Vitis <small>vinifera pontica</small></span>
+            <h3>Ancestor vines</h3>
+            <p>By one theory, Phoenicians carried Georgian and Anatolian varieties to Europe — ancestors of many of today’s white grapes.</p>
+          </article>
+          <article class="era era--img era--gold">
+            <figure class="arch-img"><img src="assets/img/qvevri-lid-sm.webp" alt="" loading="lazy"></figure>
+            <span class="era__year">1908</span>
+            <h3>Maiseli begins</h3>
+            <p>Our great-grandfather buries the family’s first qvevri — the same one we still make wine in today.</p>
+          </article>
+          <article class="era era--last">
+            <span class="era__year">2013</span>
+            <h3>UNESCO</h3>
+            <p>The traditional Georgian method of making wine in qvevri is inscribed as “Qvevri Wine” on the list of the world’s intangible cultural heritage.</p>
+          </article>
+        </div>
+        <div class="homeland__line" aria-hidden="true"><span></span></div>
+      </div>
+    </section>
+
+    <!-- ===================== CELLAR ===================== -->
+    <section class="cellar" id="cellar">
+      <div class="cellar__pin">
+        <div class="cellar__grid">
+          <figure class="cg cg--1"><img src="assets/img/cellar-steps-sm.webp" alt="Brick steps leading into the cellar" loading="lazy"></figure>
+          <figure class="cg cg--2"><img src="assets/img/cellar-amphora-sm.webp" alt="Clay vessel in a lit niche" loading="lazy"></figure>
+          <figure class="cg cg--3"><img src="assets/img/cellar-barrels-sm.webp" alt="Row of oak barrels" loading="lazy"></figure>
+          <figure class="cg cg--4"><img src="assets/img/cellar-bottles-sm.webp" alt="Bottles resting in an arched niche" loading="lazy"></figure>
+          <figure class="cg cg--main"><img src="assets/img/cellar-hall-sm.webp" data-src="assets/img/cellar-hall.webp" alt="The vaulted brick hall of the Maiseli cellar" loading="lazy"></figure>
+          <figure class="cg cg--5"><img src="assets/img/qvevri-lid-sm.webp" alt="A sealed qvevri in the floor" loading="lazy"></figure>
+          <figure class="cg cg--6"><img src="assets/img/cellar-qvevri-niche-sm.webp" alt="Qvevri above stacked bottles" loading="lazy"></figure>
+          <figure class="cg cg--7"><img src="assets/img/cellar-barrel-sm.webp" alt="A barrel seen close up" loading="lazy"></figure>
+          <figure class="cg cg--8"><img src="assets/img/cellar-qvevri-floor-sm.webp" alt="Qvevri set into the floor" loading="lazy"></figure>
+        </div>
+        <div class="cellar__copy">
+          <p class="eyebrow eyebrow--light">Step inside</p>
+          <p class="cellar__script">From the century-old cellar</p>
+          <p class="cellar__text">Stone, brick and earth — where sealed qvevri rest beneath the floor and every bottle is part of a hand-crafted limited run.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="contact">
+    <div class="footer__top">
+      <div>
+        <p class="eyebrow eyebrow--light">Maiseli · Wine of Georgia</p>
+        <h2 class="footer__title">Let’s raise a glass <em>together.</em></h2>
+      </div>
+      <!-- Contact details to be supplied by the winery -->
+      <div class="footer__cols">
+        <div>
+          <h4>Explore</h4>
+          <a href="#wines">Our Wines</a><a href="#story">Our Story</a><a href="#vineyard">Vineyard</a><a href="#winemaking">Winemaking</a><a href="#cellar">The Cellar</a>
+        </div>
+        <div>
+          <h4>Collections</h4>
+          <a href="#wines" data-go="qvevri">Traditional Qvevri</a><a href="#wines" data-go="heritage">Our Heritage</a><a href="#wines" data-go="semisweet">Naturally Semi-Sweet</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__word" aria-hidden="true"><span>M</span><span>A</span><span>I</span><span>S</span><span>E</span><span>L</span><span>I</span></div>
+    <div class="footer__bottom">
+      <span>© <span data-year></span> Maiseli Winery · Georgia</span>
+      <span>Please enjoy responsibly</span>
+      <a href="#top" class="footer__top-link" data-magnetic>Back to top ↑</a>
+    </div>
+  </footer>
+
+  <!-- Wine detail dialog -->
+  <dialog class="detail" aria-labelledby="detail-name">
+    <button class="detail__close" aria-label="Close">×</button>
+    <div class="detail__grid">
+      <div class="detail__visual"><div class="detail__img"></div></div>
+      <div class="detail__body">
+        <p class="eyebrow detail__collection"></p>
+        <h3 id="detail-name" class="detail__name"></h3>
+        <p class="detail__sub"></p>
+        <dl class="detail__facts"></dl>
+        <p class="detail__desc"></p>
+        <p class="detail__coll"></p>
+        <p class="detail__script">From the century-old cellar</p>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/SplitText.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="js/wines.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
