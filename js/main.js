@@ -186,7 +186,6 @@
   };
   let current = 0;
   let filter = 'all';
-  let busy = false;
 
   const factsHTML = w => [
     ['Vintage', w.vintage || '—'],
@@ -203,43 +202,67 @@
 
   const visibleList = () => WINES.map((w, i) => i).filter(i => filter === 'all' || WINES[i].collection === filter);
 
-  function renderInfo(w, i) {
+  // instant parts: counter, active thumbnail, colour — respond the moment a wine is chosen
+  function renderMeta(w, i) {
     const list = visibleList();
-    info.col.textContent = (COLS[w.collection] || {}).name || '';
-    info.name.textContent = w.name;
-    info.sub.textContent = w.sub;
-    info.facts.innerHTML = factsHTML(w);
-    info.desc.textContent = w.desc;
     info.idx.textContent = String(list.indexOf(i) + 1).padStart(2, '0');
     info.total.textContent = String(list.length).padStart(2, '0');
-    ghost.textContent = w.grape;
     stage.style.setProperty('--hue', w.hue);
     stage.style.setProperty('--glow', w.glow);
     railItems.forEach(r => r.classList.toggle('is-active', +r.dataset.i === i));
   }
 
+  function renderInfo(w, i) {
+    info.col.textContent = (COLS[w.collection] || {}).name || '';
+    info.name.textContent = w.name;
+    info.sub.textContent = w.sub;
+    info.facts.innerHTML = factsHTML(w);
+    info.desc.textContent = w.desc;
+    ghost.textContent = w.grape;
+    renderMeta(w, i);
+  }
+
+  // Transitions are interruptible: a new choice takes over from wherever the last one is,
+  // and rapid choices play faster so browsing never waits on an animation.
+  let stageTl = null;
+  let lastSelect = 0;
   function select(i, dir = 1, instant = false) {
-    if (busy && !instant) return;
     const w = WINES[i];
-    const prevEl = stageImg.firstElementChild;
+    const leaving = [...stageImg.children].filter(el => !el.classList.contains('is-leaving'));
     current = i;
     stageImg.insertAdjacentHTML('beforeend', bottleMarkup(w));
     const nextEl = stageImg.lastElementChild;
 
     if (instant || !hasGsap || reduced) {
-      if (prevEl && prevEl !== nextEl) prevEl.remove();
+      [...stageImg.children].forEach(el => { if (el !== nextEl) el.remove(); });
       renderInfo(w, i);
       return;
     }
-    busy = true;
-    const tl = gsap.timeline({ onComplete: () => { busy = false; } });
-    if (prevEl) tl.to(prevEl, { xPercent: -140 * dir, rotation: -14 * dir, opacity: 0, duration: .7, ease: 'power3.in', onComplete: () => prevEl.remove() }, 0);
-    tl.to([info.col, info.name, info.sub, info.facts, info.desc], { y: -20, opacity: 0, duration: .35, stagger: .03, ease: 'power2.in' }, 0)
-      .to(ghost, { opacity: 0, x: -80 * dir, duration: .4 }, 0)
-      .add(() => renderInfo(w, i), .45)
-      .fromTo(nextEl, { xPercent: 140 * dir, rotation: 14 * dir, opacity: 0 }, { xPercent: 0, rotation: 0, opacity: 1, duration: 1.1, ease: 'expo.out' }, .45)
-      .fromTo([info.col, info.name, info.sub, info.facts, info.desc], { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .06, ease: 'power3.out' }, .5)
-      .fromTo(ghost, { opacity: 0, x: 80 * dir }, { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out' }, .5);
+
+    const now = performance.now();
+    const rushed = (stageTl && stageTl.isActive()) || now - lastSelect < 900;
+    lastSelect = now;
+    const speed = rushed ? 1.8 : 1;
+    if (stageTl) stageTl.kill();
+    renderMeta(w, i);
+
+    // outgoing bottles leave from their current position, independent of the timeline
+    leaving.forEach(el => {
+      el.classList.add('is-leaving');
+      gsap.to(el, { xPercent: -140 * dir, rotation: -14 * dir, opacity: 0, duration: .7 / speed, ease: 'power3.in', overwrite: true, onComplete: () => el.remove() });
+    });
+
+    // when rushed, the next wine arrives almost at once so the stage is never empty
+    const inAt = rushed ? .12 : .45;
+    const texts = [info.col, info.name, info.sub, info.facts, info.desc];
+    stageTl = gsap.timeline();
+    stageTl.to(texts, { y: -20, opacity: 0, duration: rushed ? .12 : .35, stagger: rushed ? .01 : .03, ease: 'power2.in', overwrite: true }, 0)
+      .to(ghost, { opacity: 0, x: -80 * dir, duration: rushed ? .12 : .4, overwrite: true }, 0)
+      .add(() => renderInfo(w, i), inAt)
+      .fromTo(nextEl, { xPercent: 140 * dir, rotation: 14 * dir, opacity: 0 }, { xPercent: 0, rotation: 0, opacity: 1, duration: 1.1, ease: 'expo.out' }, rushed ? 0 : inAt)
+      .fromTo(texts, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: .8, stagger: .06, ease: 'power3.out' }, inAt + .05)
+      .fromTo(ghost, { opacity: 0, x: 80 * dir }, { opacity: 1, x: 0, duration: 1.2, ease: 'expo.out' }, inAt + .05);
+    stageTl.timeScale(speed);
   }
 
   function step(d) {
