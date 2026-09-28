@@ -23,7 +23,7 @@
 
   --serif: 'Cormorant Garamond', 'Times New Roman', serif;
   --sans: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --script: 'Mrs Saint Delafield', 'Brush Script MT', cursive;
+  --script: 'Allura', 'Brush Script MT', cursive;
   --ka: 'Noto Serif Georgian', serif;
 
   --pad: clamp(20px, 5vw, 80px);
@@ -446,7 +446,7 @@ p { margin: 0 0 1.2em; }
 .cg--6 { grid-area: 3 / 1; } .cg--7 { grid-area: 3 / 2; } .cg--8 { grid-area: 3 / 3; }
 .cg--main { --shade: 0; }
 .cg--main::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,11,14,.25), rgba(23,11,14,.8)); opacity: var(--shade); }
-.cellar__copy { position: absolute; left: 50%; bottom: 12vh; transform: translateX(-50%); width: min(760px, 90vw); text-align: center; z-index: 3; opacity: 0; }
+.cellar__copy { position: absolute; left: 50%; bottom: 12vh; transform: translateX(-50%); width: min(1040px, 92vw); text-align: center; z-index: 3; opacity: 0; }
 .cellar__copy .eyebrow { justify-content: center; }
 .cellar__copy .eyebrow::before { display: none; }
 .cellar__script { clip-path: inset(-1em -1em -1em -1em); font-family: var(--script); font-size: clamp(60px, 9vw, 150px); line-height: .9; color: var(--gold-2); margin: 0 0 20px; }
