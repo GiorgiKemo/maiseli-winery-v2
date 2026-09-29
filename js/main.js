@@ -481,7 +481,14 @@
 
     // wine stage entrance
     gsap.from('.stage', { clipPath: 'inset(12% 8% 12% 8% round 200px)', duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.stage', start: 'top 80%' } });
-    gsap.from('.rail__item', { y: 60, opacity: 0, duration: 1, stagger: .06, ease: 'expo.out', scrollTrigger: { trigger: '.rail', start: 'top 92%' } });
+    // Grow in from the bottom edge (scale, not a slide) — the rail scrolls sideways, so it clips
+    // anything moved outside its box. CSS hover transitions are paused so they don't fight the tween.
+    gsap.from('.rail__item', {
+      scale: .88, opacity: 0, transformOrigin: '50% 100%', duration: .9, stagger: .05, ease: 'power3.out',
+      scrollTrigger: { trigger: '.rail', start: 'top 92%' },
+      onStart: () => rail.classList.add('rail--intro'),
+      onComplete: () => { rail.classList.remove('rail--intro'); gsap.set('.rail__item', { clearProps: 'transform,opacity' }); }
+    });
 
     // pull quote word fill
     const pq = SplitText.create('.pull__text', { type: 'words', wordsClass: 'w' });

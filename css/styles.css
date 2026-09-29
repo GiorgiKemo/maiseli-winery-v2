@@ -287,6 +287,7 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
 .rail::-webkit-scrollbar { display: none; }
 .rail__item { flex: 1 0 128px; max-width: 190px; scroll-snap-align: start; display: grid; justify-items: center; gap: 8px; padding: 18px 10px 16px; border-radius: 120px 120px 16px 16px; background: rgba(61, 11, 23, .045); transition: background .5s, transform .5s var(--ease), opacity .5s, filter .5s; position: relative; }
 .rail__item:hover { background: rgba(61, 11, 23, .09); transform: translateY(-6px); }
+.rail--intro .rail__item { transition: none; }
 .rail__item.is-active { background: var(--wine-2); color: var(--cream); }
 .rail__item.is-dim { opacity: .28; filter: grayscale(.7); }
 .rail__item img, .rail__item .bottle-svg { height: 150px; width: auto; transition: transform .6s var(--ease); }
