@@ -52,27 +52,9 @@
   });
 
   /* ------------------------------------------------------------------
-     Cursor + magnetic
+     Magnetic buttons (native cursor is used throughout)
   ------------------------------------------------------------------ */
-  const cursor = $('.cursor');
   if (finePointer && hasGsap && !reduced) {
-    root.classList.add('has-cursor');
-    const label = $('.cursor__label');
-    const xTo = gsap.quickTo(cursor, 'x', { duration: .35, ease: 'power3' });
-    const yTo = gsap.quickTo(cursor, 'y', { duration: .35, ease: 'power3' });
-    addEventListener('pointermove', e => { xTo(e.clientX); yTo(e.clientY); }, { passive: true });
-    document.addEventListener('pointerover', e => {
-      const t = e.target;
-      const lab = t.closest('[data-cursor]');
-      const hov = t.closest('a, button, .rail__item, .varieties__list li');
-      if (hov) { cursor.classList.add('is-hover'); cursor.classList.remove('is-label'); return; }
-      cursor.classList.remove('is-hover');
-      if (lab) { label.textContent = lab.dataset.cursor; cursor.classList.add('is-label'); }
-      else cursor.classList.remove('is-label');
-    });
-    document.addEventListener('pointerleave', () => gsap.to(cursor, { opacity: 0 }));
-    document.addEventListener('pointerenter', () => gsap.to(cursor, { opacity: 1 }));
-
     $$('[data-magnetic]').forEach(el => {
       const mx = gsap.quickTo(el, 'x', { duration: .6, ease: 'elastic.out(1,.4)' });
       const my = gsap.quickTo(el, 'y', { duration: .6, ease: 'elastic.out(1,.4)' });
@@ -291,13 +273,19 @@
 
   // drag / swipe
   let sx = null, sy = null;
-  stage.addEventListener('pointerdown', e => { if (e.target.closest('button')) return; sx = e.clientX; sy = e.clientY; });
+  stage.addEventListener('pointerdown', e => {
+    if (e.target.closest('button')) return;
+    sx = e.clientX; sy = e.clientY;
+    stage.classList.add('is-dragging');
+  });
   addEventListener('pointerup', e => {
     if (sx === null) return;
     const dx = e.clientX - sx, dy = e.clientY - sy;
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) step(dx < 0 ? 1 : -1);
     sx = null;
+    stage.classList.remove('is-dragging');
   });
+  addEventListener('pointercancel', () => { sx = null; stage.classList.remove('is-dragging'); });
 
   // 3D tilt
   if (finePointer && hasGsap && !reduced) {
@@ -354,14 +342,12 @@
     const vis = $('.detail__visual', dialog);
     vis.style.setProperty('--hue', w.hue);
     vis.style.setProperty('--glow', w.glow);
-    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');
-    dialog.appendChild(cursor); // modal dialogs sit in the top layer, so the cursor must live inside it
-    lockScroll(true);
+    if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open', '');    lockScroll(true);
     if (hasGsap && !reduced) gsap.fromTo($('.detail__img', dialog), { y: 80, rotation: 8, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 1.2, ease: 'expo.out', delay: .1 });
   }
   $('.detail__close').addEventListener('click', () => dialog.close());
   dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
-  dialog.addEventListener('close', () => { document.body.appendChild(cursor); lockScroll(false); });
+  dialog.addEventListener('close', () => lockScroll(false));
 
   /* ------------------------------------------------------------------
      Varieties hover image
