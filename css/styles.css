@@ -342,7 +342,7 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
 /* ---------- Vineyard ---------- */
 .vineyard { background: var(--paper); }
 .vineyard__hero { position: relative; height: 230svh; min-height: 1200px; }
-.vineyard__media { position: sticky; top: 0; height: 100svh; overflow: hidden; clip-path: inset(16% 30% 16% 30% round 400px 400px 20px 20px); color: var(--cream); }
+.vineyard__media { position: sticky; top: 0; height: 100svh; overflow: hidden; clip-path: inset(16% 30% 16% 30% round 50vw 50vw 20px 20px); color: var(--cream); }
 .vineyard__media > img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.35); }
 .vineyard__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(23,11,14,.05) 30%, rgba(23,11,14,.72)); pointer-events: none; }
 .vineyard__caption { position: absolute; left: var(--pad); right: var(--pad); bottom: 12svh; z-index: 2; pointer-events: none; }

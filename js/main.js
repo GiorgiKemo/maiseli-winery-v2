@@ -482,6 +482,24 @@
       gsap.to(fig, { yPercent: i ? -18 : 6, ease: 'none', scrollTrigger: { trigger: '.story__grid', start: 'top bottom', end: 'bottom top', scrub: true } });
     });
 
+    // Grows an arch-shaped clip window to full bleed. The top radius tracks the window's
+    // current width, so it stays a true semicircle while growing and only flattens at the end.
+    function archOpen(el, insetY, insetX, bottomR, ease) {
+      const state = { p: 0 };
+      const apply = () => {
+        const p = state.p;
+        const iy = insetY * (1 - p), ix = insetX * (1 - p);
+        const w = el.clientWidth * (1 - 2 * ix / 100), h = el.clientHeight * (1 - 2 * iy / 100);
+        const arch = 1 - gsap.utils.clamp(0, 1, (p - .72) / .28);     // flatten in the last ~quarter
+        const r = Math.min(w / 2, h * .95) * arch;
+        const rb = bottomR * (1 - p);
+        el.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}% round ${r}px ${r}px ${rb}px ${rb}px)`;
+      };
+      apply();
+      addEventListener('resize', apply);
+      return gsap.to(state, { p: 1, duration: 1, ease, onUpdate: apply });
+    }
+
     const mm = gsap.matchMedia();
 
     mm.add('(min-width: 961px)', () => {
@@ -499,7 +517,7 @@
 
       // Vineyard — arch window opens to full bleed, then the caption rises
       gsap.timeline({ scrollTrigger: { trigger: '.vineyard__hero', start: 'top top', end: 'bottom bottom', scrub: true } })
-        .to('.vineyard__media', { clipPath: 'inset(0% 0% 0% 0% round 0px 0px 0px 0px)', ease: 'power1.inOut', duration: 1 }, 0)
+        .add(archOpen($('.vineyard__media'), 16, 30, 20, 'power1.inOut'), 0)
         .to('.vineyard__media > img', { scale: 1, ease: 'none', duration: 1.4 }, 0)
         .fromTo('.vineyard__caption > *', { y: 60, opacity: 0 }, { y: 0, opacity: 1, stagger: .12, duration: .5, ease: 'power2.out' }, .75);
 
@@ -527,7 +545,7 @@
     mm.add('(max-width: 960px)', () => {
       gsap.from('.may__side', { y: 60, opacity: 0, stagger: .15, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.may__side', start: 'top 90%' } });
       gsap.timeline({ scrollTrigger: { trigger: '.vineyard__hero', start: 'top top', end: 'bottom bottom', scrub: true } })
-        .to('.vineyard__media', { clipPath: 'inset(0% 0% 0% 0% round 0px 0px 0px 0px)', ease: 'none', duration: 1 }, 0)
+        .add(archOpen($('.vineyard__media'), 10, 6, 16, 'none'), 0)
         .to('.vineyard__media > img', { scale: 1, ease: 'none', duration: 1 }, 0)
         .fromTo('.vineyard__caption > *', { y: 40, opacity: 0 }, { y: 0, opacity: 1, stagger: .1, duration: .4 }, .6);
       $$('.era').forEach(era => gsap.from(era, { y: 50, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: era, start: 'top 90%' } }));
