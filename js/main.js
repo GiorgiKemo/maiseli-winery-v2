@@ -120,17 +120,29 @@
   /* ------------------------------------------------------------------
      Hi-res image upgrade
   ------------------------------------------------------------------ */
+  // decode the large version off the main thread first, so swapping it in never stalls a frame
   const upgrade = new IntersectionObserver(entries => {
     entries.forEach(en => {
       if (!en.isIntersecting) return;
       const img = en.target;
       const hi = new Image();
-      hi.onload = () => { img.src = img.dataset.src; };
       hi.src = img.dataset.src;
+      hi.decode().then(() => { img.src = img.dataset.src; }).catch(() => {});
       upgrade.unobserve(img);
     });
-  }, { rootMargin: '600px' });
+  }, { rootMargin: '1200px' });
   if (innerWidth > 700) $$('img[data-src]').forEach(img => upgrade.observe(img));
+
+  // Pinned / horizontal scenes: fetch and decode their photos ~2 screens ahead, so nothing
+  // loads or decodes while the scene is being scrubbed (native lazy-loading reacts too late there).
+  const warm = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      $$('img', en.target).forEach(img => { img.loading = 'eager'; img.decode && img.decode().catch(() => {}); });
+      warm.unobserve(en.target);
+    });
+  }, { rootMargin: '200% 0px' });
+  $$('.making, .homeland, .cellar').forEach(s => warm.observe(s));
 
   /* ------------------------------------------------------------------
      Wines
@@ -594,9 +606,18 @@
     gsap.from('.footer__word span', { yPercent: 100, duration: 1.4, stagger: .06, ease: 'expo.out', scrollTrigger: { trigger: '.footer__word', start: 'top 95%' } });
     gsap.from('.footer__title', { y: 60, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: '.footer', start: 'top 80%' } });
 
-    // refresh once late images/fonts settle (debounced for lazy images)
-    let refreshT;
-    document.addEventListener('load', e => { if (e.target.tagName === 'IMG') { clearTimeout(refreshT); refreshT = setTimeout(() => ScrollTrigger.refresh(), 200); } }, true);
+    // Safety net: re-measure only if a late image actually changed the page height.
+    // (A full refresh mid-scroll causes a visible hitch, so never do it needlessly.)
+    let refreshT, lastH = document.documentElement.scrollHeight;
+    document.addEventListener('load', e => {
+      if (e.target.tagName !== 'IMG') return;
+      clearTimeout(refreshT);
+      refreshT = setTimeout(() => {
+        const h = document.documentElement.scrollHeight;
+        if (Math.abs(h - lastH) > 2) { lastH = h; ScrollTrigger.refresh(); }
+      }, 250);
+    }, true);
+    ScrollTrigger.addEventListener('refresh', () => { lastH = document.documentElement.scrollHeight; });
     addEventListener('load', () => ScrollTrigger.refresh());
     document.fonts && document.fonts.ready.then(() => ScrollTrigger.refresh());
   }
