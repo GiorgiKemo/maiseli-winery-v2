@@ -452,7 +452,7 @@
       .from(split.chars, { yPercent: 120, rotation: 10, opacity: 0, duration: 1.3, stagger: .022, ease: 'expo.out' }, .15)
       .from('.hero__eyebrow', { y: 20, opacity: 0, duration: 1, ease: 'power3.out' }, .3)
       .from('.hero__script', { clipPath: 'inset(-1em 130% -1em -1em)', duration: 1.6, ease: 'power2.inOut' }, .8)
-      .from('.hero__actions > *', { y: 30, opacity: 0, duration: 1, stagger: .1, ease: 'power3.out' }, 1)
+      .from('.hero__actions', { y: 30, opacity: 0, duration: 1, ease: 'power3.out' }, 1)   // container, not the buttons: they have their own magnetic y
       .from('.hero__ka', { opacity: 0, x: 80, duration: 2, ease: 'expo.out' }, .4)
       .from('.hero__meta, .hero__scroll', { opacity: 0, duration: 1 }, 1.3)
       .from(nav, { opacity: 0, duration: 1.1, ease: 'power2.out', clearProps: 'opacity' }, .6);
@@ -463,14 +463,16 @@
     if (!hasGsap || reduced) return;
 
     // hero scroll-out
-    gsap.to('.hero__media img', { yPercent: 18, scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    // Scroll parallax lives on the outer layer, with explicit start values, so it can never
+    // fight the intro zoom on the <img> (that fight made the photo flicker when scrolling mid-intro).
+    gsap.fromTo('.hero__media', { yPercent: 0, scale: 1 }, { yPercent: 18, scale: 1.12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
     gsap.to('.hero__content', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom 20%', scrub: true } });
     gsap.to('.hero__ka', { xPercent: -25, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
     // gentle ken burns + pointer parallax
-    gsap.to('.hero__media', { scale: 1.06, duration: 16, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.hero__zoom', { scale: 1.06, duration: 16, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     if (finePointer) {
-      const hx = gsap.quickTo('.hero__media', 'x', { duration: 1.4, ease: 'power3' });
-      const hy = gsap.quickTo('.hero__media', 'y', { duration: 1.4, ease: 'power3' });
+      const hx = gsap.quickTo('.hero__zoom', 'x', { duration: 1.4, ease: 'power3' });
+      const hy = gsap.quickTo('.hero__zoom', 'y', { duration: 1.4, ease: 'power3' });
       $('.hero').addEventListener('pointermove', e => { hx((e.clientX / innerWidth - .5) * -24); hy((e.clientY / innerHeight - .5) * -16); });
     }
 
@@ -543,7 +545,7 @@
       // May — title plays on entry, then the two moments slide in while pinned
       const maySplit = SplitText.create('.may__title', { type: 'words,chars', mask: 'words', wordsClass: 'sw' });
       gsap.timeline({ scrollTrigger: { trigger: '.may', start: 'top 65%' } })
-        .from('.may__word', { scale: 1.5, opacity: 0, duration: 2, ease: 'expo.out' }, 0)
+        .from('.may__word span', { scale: 1.5, opacity: 0, duration: 2, ease: 'expo.out' }, 0)   // entrance on the inner span; the pinned scrub owns the outer div
         .from(maySplit.chars, { yPercent: 110, duration: 1.2, stagger: .025, ease: 'expo.out' }, .1)
         .from('.may__center .eyebrow, .may__text', { opacity: 0, y: 30, stagger: .12, duration: 1, ease: 'power3.out' }, .5);
       gsap.timeline({ scrollTrigger: { trigger: '.may__pin', start: 'top top', end: '+=120%', pin: true, scrub: 1 } })

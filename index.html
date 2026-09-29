@@ -96,8 +96,12 @@
 
     <!-- ===================== HERO ===================== -->
     <section class="hero">
+      <!-- three layers so no two animations ever write the same transform:
+           media = scroll parallax · zoom = breathing + pointer parallax · img = intro zoom -->
       <div class="hero__media">
-        <img src="assets/img/hero-sunset.webp" srcset="assets/img/hero-sunset-sm.webp 900w, assets/img/hero-sunset.webp 2000w" sizes="100vw" alt="Maiseli vineyard rows beneath a glowing Georgian sunset">
+        <div class="hero__zoom">
+          <img src="assets/img/hero-sunset.webp" srcset="assets/img/hero-sunset-sm.webp 900w, assets/img/hero-sunset.webp 2000w" sizes="100vw" alt="Maiseli vineyard rows beneath a glowing Georgian sunset">
+        </div>
       </div>
       <canvas class="hero__dust" aria-hidden="true"></canvas>
       <div class="hero__shade"></div>
@@ -198,7 +202,7 @@
     <!-- ===================== MAY ===================== -->
     <section class="may" id="may">
       <div class="may__pin">
-        <div class="may__word" aria-hidden="true">მაისი</div>
+        <div class="may__word" aria-hidden="true"><span>მაისი</span></div>
         <div class="may__center">
           <p class="eyebrow eyebrow--light">The meaning of Maiseli</p>
           <h2 class="may__title"><span class="may__q">“</span>One who <em>belongs</em> to May<span class="may__q">”</span></h2>
