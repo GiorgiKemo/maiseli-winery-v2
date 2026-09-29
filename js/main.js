@@ -389,36 +389,54 @@
     const c = $('.hero__dust');
     if (!c || reduced) return;
     const ctx = c.getContext('2d');
-    let w, h, dpr, parts = [], running = true;
+
+    // pre-rendered soft glow (drawing canvas shadows per particle every frame drops frames)
+    const sprite = document.createElement('canvas');
+    sprite.width = sprite.height = 32;
+    const sg = sprite.getContext('2d');
+    const grad = sg.createRadialGradient(16, 16, 0, 16, 16, 16);
+    grad.addColorStop(0, 'rgba(250, 222, 160, 1)');
+    grad.addColorStop(.25, 'rgba(240, 200, 130, .55)');
+    grad.addColorStop(1, 'rgba(240, 190, 110, 0)');
+    sg.fillStyle = grad; sg.fillRect(0, 0, 32, 32);
+
+    let w, h, parts = [], visible = false, rafId = 0, last = 0;
     const resize = () => {
-      dpr = Math.min(devicePixelRatio || 1, 2);
+      const dpr = Math.min(devicePixelRatio || 1, 2);
       w = c.offsetWidth; h = c.offsetHeight;
       c.width = w * dpr; c.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(90, w / 16));
+      const n = Math.round(Math.min(70, w / 20));
       parts = Array.from({ length: n }, () => ({
-        x: Math.random() * w, y: Math.random() * h, r: Math.random() * 1.8 + .4,
-        vy: -(Math.random() * .35 + .08), vx: (Math.random() - .5) * .2, p: Math.random() * Math.PI * 2
+        x: Math.random() * w, y: Math.random() * h, s: Math.random() * 6 + 4,
+        vy: -(Math.random() * 14 + 5), vx: (Math.random() - .5) * 8,      // px per second
+        p: Math.random() * Math.PI * 2, base: Math.random() * .35 + .3
       }));
     };
     resize();
     addEventListener('resize', resize);
-    new IntersectionObserver(([en]) => { running = en.isIntersecting; if (running) requestAnimationFrame(tick); }).observe(c);
-    function tick() {
-      if (!running) return;
+
+    // exactly one loop at a time; time-based so speed is the same on 60/120/144 Hz screens
+    function tick(now) {
+      if (!visible) { rafId = 0; return; }
+      const dt = Math.min((now - (last || now)) / 1000, .05);
+      last = now;
       ctx.clearRect(0, 0, w, h);
       for (const p of parts) {
-        p.x += p.vx + Math.sin(p.p) * .15; p.y += p.vy; p.p += .012;
-        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
-        const a = .35 + Math.sin(p.p * 3) * .3;
-        ctx.beginPath();
-        ctx.fillStyle = `rgba(240, 206, 140, ${Math.max(a, .05)})`;
-        ctx.shadowColor = 'rgba(240, 190, 110, .9)'; ctx.shadowBlur = 8;
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+        p.p += dt * .6;
+        p.x += (p.vx + Math.sin(p.p) * 6) * dt;
+        p.y += p.vy * dt;
+        if (p.y < -12) { p.y = h + 12; p.x = Math.random() * w; }
+        ctx.globalAlpha = p.base + Math.sin(p.p * .8) * .15;             // slow, gentle glow — no twinkle
+        ctx.drawImage(sprite, p.x - p.s / 2, p.y - p.s / 2, p.s, p.s);
       }
-      requestAnimationFrame(tick);
+      ctx.globalAlpha = 1;
+      rafId = requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
+    new IntersectionObserver(([en]) => {
+      visible = en.isIntersecting;
+      if (visible && !rafId) { last = 0; rafId = requestAnimationFrame(tick); }
+    }).observe(c);
   }
 
   /* ------------------------------------------------------------------
