@@ -378,6 +378,42 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
 .varieties__float { position: absolute; top: 0; left: 0; width: 280px; aspect-ratio: 3 / 4; border-radius: 999px 999px 10px 10px; overflow: hidden; pointer-events: none; opacity: 0; transform: scale(.6); z-index: 3; box-shadow: 0 30px 60px rgba(31,10,16,.3); }
 .varieties__float img { width: 100%; height: 100%; object-fit: cover; }
 
+/* ---------- Harvest gallery (rtveli) ---------- */
+.rtveli { position: relative; background: var(--cream); padding: clamp(110px, 12vw, 190px) var(--pad) clamp(90px, 10vw, 150px); overflow: hidden; }
+.rtveli__word { position: absolute; left: 0; right: 0; top: clamp(30px, 4vw, 70px); text-align: center; pointer-events: none; font-family: var(--ka); font-weight: 300; font-size: clamp(90px, 19vw, 340px); line-height: 1.1; color: transparent; -webkit-text-stroke: 1px rgba(94,20,38,.13); white-space: nowrap; }
+.rtveli__word span { display: inline-block; }
+.rtveli__head { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 110px); align-items: end; margin-bottom: clamp(50px, 6vw, 90px); }
+.rtveli__head .h2 { margin-bottom: 0; }
+.rtveli__intro p:not(.lead) { color: var(--muted); margin-bottom: 0; }
+.rtveli__gallery { position: relative; columns: 3; column-gap: clamp(14px, 1.6vw, 24px); }
+.rtveli__item { position: relative; display: block; margin: 0 0 clamp(14px, 1.6vw, 24px); break-inside: avoid; overflow: hidden; border-radius: 16px; background: var(--wine); cursor: zoom-in; isolation: isolate; }
+.rtveli__item--arch { border-radius: 999px 999px 16px 16px; }
+.rtveli__item img { width: 100%; height: auto; transition: transform 1.2s var(--ease), filter 1.2s var(--ease); }
+.rtveli__item::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(23,11,14,.7)); opacity: 0; transition: opacity .6s var(--ease); pointer-events: none; }
+.rtveli__cap { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 2; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 1.6vw, 26px); line-height: 1.2; color: var(--cream); opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease); pointer-events: none; }
+.rtveli__cap i { display: block; margin-bottom: 6px; font-family: var(--sans); font-style: normal; font-size: 11px; letter-spacing: .24em; color: var(--gold-2); }
+.rtveli__item:hover img, .rtveli__item:focus-visible img { transform: scale(1.06); }
+.rtveli__item:hover::after, .rtveli__item:focus-visible::after,
+.rtveli__item:hover .rtveli__cap, .rtveli__item:focus-visible .rtveli__cap { opacity: 1; transform: none; }
+.rtveli__item:focus-visible { outline-offset: 3px; }
+.rtveli__script { position: relative; margin: clamp(30px, 4vw, 60px) 0 0; text-align: center; font-family: var(--script); font-size: clamp(48px, 6vw, 96px); line-height: 1; color: var(--clay); }
+.rtveli + .making { padding-top: clamp(90px, 10vw, 150px); }
+
+/* lightbox */
+.lightbox { width: 100vw; height: 100svh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(23,11,14,.94); color: var(--cream); overflow: hidden; }
+.lightbox[open] { display: grid; grid-template-columns: auto 1fr auto; align-items: center; animation: lbIn .5s var(--ease); }
+.lightbox::backdrop { background: transparent; }
+@keyframes lbIn { from { opacity: 0 } }
+.lightbox__figure { margin: 0; height: 100svh; padding: 70px 0 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; min-width: 0; }
+.lightbox__img { max-width: 100%; max-height: calc(100svh - 170px); width: auto; height: auto; object-fit: contain; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.5); user-select: none; -webkit-user-drag: none; }
+.lightbox__cap { display: flex; align-items: baseline; gap: 16px; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); text-align: center; }
+.lightbox__count { font-family: var(--sans); font-style: normal; font-size: 12px; letter-spacing: .22em; color: var(--gold-2); white-space: nowrap; }
+.lightbox__close { position: absolute; top: 18px; right: 18px; z-index: 2; width: 48px; height: 48px; border-radius: 50%; background: var(--cream); color: var(--wine); font-size: 28px; line-height: 1; transition: transform .5s var(--ease); }
+.lightbox__close:hover { transform: rotate(90deg); }
+.lightbox__arrow { width: 56px; height: 56px; margin: 0 clamp(10px, 2vw, 30px); border-radius: 50%; border: 1px solid rgba(232,207,156,.35); display: grid; place-items: center; transition: background .4s, color .4s; }
+.lightbox__arrow:hover { background: var(--gold); color: var(--ink); border-color: var(--gold); }
+.lightbox__arrow svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+
 /* ---------- Winemaking cards ---------- */
 .making { background: var(--paper); padding: 0 var(--pad) clamp(90px, 10vw, 150px); }
 .making__head { text-align: center; padding-bottom: 60px; }
@@ -521,6 +557,16 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
   .varieties__list li { grid-template-columns: 40px 1fr; }
   .varieties__note { grid-column: 2; text-align: left; font-size: 11px; }
   .varieties__float { display: none; }
+  .rtveli__head { grid-template-columns: 1fr; align-items: start; }
+  .rtveli__gallery { columns: 2; }
+  .rtveli__cap { display: none; }
+  .lightbox[open] { grid-template-columns: 1fr; }
+  .lightbox__figure { padding: 70px 14px 100px; }
+  .lightbox__img { max-height: calc(100svh - 230px); }
+  .lightbox__cap { font-size: 20px; flex-direction: column; align-items: center; gap: 6px; }
+  .lightbox__arrow { position: absolute; bottom: 24px; margin: 0; background: rgba(23,11,14,.6); }
+  .lightbox__arrow--prev { left: 22px; }
+  .lightbox__arrow--next { right: 22px; }
   .card { grid-template-columns: 1fr; position: relative; top: auto; min-height: 0; }
   .card__img { min-height: 0; aspect-ratio: 4 / 3.4; order: -1; }
   .card__n { position: static; margin-bottom: 10px; font-size: 80px; }
@@ -559,6 +605,9 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
   .story__img--b { border-width: 5px; }
   .vineyard__media { clip-path: inset(10% 6% 10% 6% round 200px 200px 16px 16px); }
   .card { padding: 22px; border-radius: 22px; }
+  .rtveli__gallery { column-gap: 10px; }
+  .rtveli__item { margin-bottom: 10px; border-radius: 12px; }
+  .rtveli__item--arch { border-radius: 999px 999px 12px 12px; }
   .footer__cols { grid-template-columns: 1fr 1fr; }
   .footer__bottom { flex-direction: column; }
   .may__side { grid-template-columns: 96px 1fr; }

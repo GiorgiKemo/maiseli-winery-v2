@@ -108,7 +108,7 @@
       navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + en.target.id));
     });
   }, { rootMargin: '-45% 0px -50% 0px' });
-  ['wines', 'story', 'vineyard', 'winemaking', 'homeland', 'cellar'].forEach(id => { const s = document.getElementById(id); if (s) sectionObs.observe(s); });
+  ['wines', 'story', 'vineyard', 'harvest', 'winemaking', 'homeland', 'cellar'].forEach(id => { const s = document.getElementById(id); if (s) sectionObs.observe(s); });
 
   // progress bar
   const bar = $('.progress span');
@@ -362,6 +362,49 @@
   dialog.addEventListener('close', () => lockScroll(false));
 
   /* ------------------------------------------------------------------
+     Harvest gallery viewer
+  ------------------------------------------------------------------ */
+  const shots = $$('.rtveli__item');
+  const lb = $('.lightbox');
+  if (shots.length && lb && typeof lb.showModal === 'function') {
+    const lbImg = $('.lightbox__img', lb);
+    let shot = 0;
+    function showShot(i, dir = 0) {
+      shot = (i + shots.length) % shots.length;
+      const a = shots[shot];
+      lbImg.src = a.getAttribute('href');
+      lbImg.alt = $('img', a).alt;
+      $('.lightbox__count', lb).textContent = `${String(shot + 1).padStart(2, '0')} / ${String(shots.length).padStart(2, '0')}`;
+      $('.lightbox__text', lb).textContent = a.dataset.caption;
+      if (dir && hasGsap && !reduced) gsap.fromTo(lbImg, { x: 60 * dir, opacity: 0 }, { x: 0, opacity: 1, duration: .7, ease: 'expo.out', overwrite: true });
+    }
+    shots.forEach((a, i) => a.addEventListener('click', e => {
+      e.preventDefault();
+      showShot(i);
+      lb.showModal();
+      lockScroll(true);
+      if (hasGsap && !reduced) gsap.fromTo(lbImg, { scale: .92, opacity: 0 }, { scale: 1, opacity: 1, duration: .9, ease: 'expo.out', overwrite: true });
+    }));
+    $('.lightbox__arrow--prev', lb).addEventListener('click', () => showShot(shot - 1, -1));
+    $('.lightbox__arrow--next', lb).addEventListener('click', () => showShot(shot + 1, 1));
+    $('.lightbox__close', lb).addEventListener('click', () => lb.close());
+    lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lightbox__figure')) lb.close(); });
+    lb.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') showShot(shot + 1, 1);
+      if (e.key === 'ArrowLeft') showShot(shot - 1, -1);
+    });
+    lb.addEventListener('close', () => lockScroll(false));
+    let lx = null, ly = null;
+    lb.addEventListener('pointerdown', e => { lx = e.clientX; ly = e.clientY; });
+    lb.addEventListener('pointerup', e => {
+      if (lx === null) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) showShot(shot + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+      lx = null;
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Varieties hover image
   ------------------------------------------------------------------ */
   const floatBox = $('.varieties__float');
@@ -605,6 +648,18 @@
 
     // varieties
     gsap.from('.varieties__list li', { y: 80, opacity: 0, duration: 1.2, stagger: .1, ease: 'expo.out', scrollTrigger: { trigger: '.varieties__list', start: 'top 85%' } });
+
+    // harvest gallery — photos rise in as they enter, the Georgian word drifts
+    gsap.set('.rtveli__item', { opacity: 0 });
+    ScrollTrigger.batch('.rtveli__item', {
+      start: 'top 92%', once: true,
+      onEnter: batch => {
+        gsap.fromTo(batch, { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, stagger: .1, ease: 'expo.out', clearProps: 'transform' });
+        gsap.fromTo(batch.map(a => $('img', a)), { scale: 1.25 }, { scale: 1, duration: 1.6, stagger: .1, ease: 'expo.out', clearProps: 'transform' });
+      }
+    });
+    gsap.fromTo('.rtveli__word span', { xPercent: 12 }, { xPercent: -12, ease: 'none', scrollTrigger: { trigger: '.rtveli', start: 'top bottom', end: 'bottom top', scrub: true } });
+    gsap.from('.rtveli__script', { clipPath: 'inset(-1em 130% -1em -1em)', duration: 1.6, ease: 'power2.inOut', scrollTrigger: { trigger: '.rtveli__script', start: 'top 90%' } });
 
     // card images
     $$('.card__img img').forEach(img => gsap.fromTo(img, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true } }));
