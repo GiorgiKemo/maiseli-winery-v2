@@ -17,6 +17,7 @@ The folder deploys as-is to any static host: `index.html`, `css/`, `js/`, `asset
 - **Age gate**: remembered per browser.
 - **Hero**: split-letter title, drifting golden dust, pointer parallax, and a scroll-out effect.
 - **Wine stage**: 8 wines in 3 collections. The background colour shifts with each wine; you can browse with arrows, swipe, drag or the keyboard. Bottles tilt in 3D, and each wine opens a details dialog.
+- **Harvest (Rtveli)**: a masonry gallery of 15 harvest photos with hover captions and a full-screen viewer (arrows, swipe, keyboard).
 - **Story, May, Vineyard, Winemaking, Homeland, Cellar**: the arch-window image reveal, pinned "One who belongs to May" scene, a variety list with a cursor-following image, stacking cards, a horizontal 8,000-year timeline, and a zoom-through cellar gallery.
 - **Motion**: GSAP 3 (ScrollTrigger and SplitText) with Lenis smooth scrolling, all vendored locally. Reduced-motion users get a static layout.
 
