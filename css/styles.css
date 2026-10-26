@@ -372,7 +372,7 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
 .varieties__n { font-size: 12px; letter-spacing: .2em; color: var(--clay); }
 .varieties__name { position: relative; font-family: var(--serif); font-weight: 300; font-size: clamp(54px, 9vw, 150px); line-height: 1; letter-spacing: -.03em; color: transparent; -webkit-text-stroke: 1.2px rgba(94,20,38,.7); transition: letter-spacing .8s var(--ease); }
 .varieties__name::after { content: attr(data-text); position: absolute; left: 0; top: 0; color: var(--wine); -webkit-text-stroke: 0; clip-path: inset(0 100% 0 0); transition: clip-path .9s var(--ease); }
-.varieties__list li:hover .varieties__name::after { clip-path: inset(0 0 0 0); }
+.varieties__list li:hover .varieties__name::after { clip-path: inset(-.2em -.2em -.35em 0); }   /* room for p/y descenders */
 .varieties__list li:hover .varieties__name { letter-spacing: -.01em; }
 .varieties__note { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: right; }
 .varieties__float { position: absolute; top: 0; left: 0; width: 280px; aspect-ratio: 3 / 4; border-radius: 999px 999px 10px 10px; overflow: hidden; pointer-events: none; opacity: 0; transform: scale(.6); z-index: 3; box-shadow: 0 30px 60px rgba(31,10,16,.3); }
@@ -555,7 +555,8 @@ a[href], button, [role="tab"], .rail__item { cursor: pointer; }
   .vineyard__body { grid-template-columns: 1fr; }
   .harvest { height: 640px; }
   .varieties__list li { grid-template-columns: 40px 1fr; }
-  .varieties__note { grid-column: 2; text-align: left; font-size: 11px; }
+  .varieties__name { padding-bottom: .16em; }   /* keep p/y descenders off the note below */
+  .varieties__note { grid-column: 2; text-align: left; font-size: 11px; margin-top: 6px; }
   .varieties__float { display: none; }
   .rtveli__head { grid-template-columns: 1fr; align-items: start; }
   .rtveli__gallery { columns: 2; }
